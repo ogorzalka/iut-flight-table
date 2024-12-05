@@ -3,9 +3,11 @@ export default function Filter(slug, datas) {
         formTagSelector: 'input, select, textarea',
         filters: {},
         datas: [],
+        slug: null,
         init() {
             this.datas = datas || [];
             this.filters = {};
+            this.slug = slug;
 
             this.bindEvent();
             this.setupWatchers();
