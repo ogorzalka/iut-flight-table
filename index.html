@@ -7,7 +7,7 @@
     <title>Vite App</title>
   </head>
   <body>
-    <div id="app" class="py-10 px-5">
+    <div id="app" class="py-10 px-5" x-data="FilterableTable('./src/data/flights.json')">
 
       <table class="border-collapse table-fixed w-full text-sm">
         <thead>
@@ -18,17 +18,13 @@
         </tr>
         </thead>
         <tbody class="bg-white dark:bg-slate-800">
-          <tr>
-            <th class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-              Entête
-            </th>
-            <td class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-              vfghdxfg
-            </td>
-            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
-              fsgsdfg
-            </td>
-          </tr>
+          <template x-for="flight in datas">
+            <tr>
+              <th x-text="flight.from" class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400"></th>
+              <td x-text="flight.to" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"></td>
+              <td x-text="flight.kms + (flight.kms > 1 ? ' kms' : ' km')" class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400"></td>
+            </tr>
+          </template>
         </tbody>
 
       </table>
