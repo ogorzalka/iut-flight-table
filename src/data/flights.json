@@ -1,0 +1,157 @@
+[
+  {
+    "from": "Adelaide",
+    "to": "Brisbane",
+    "kms": 2045
+  },
+  {
+    "from": "Brisbane",
+    "to": "Sydney",
+    "kms": 982
+  },
+  {
+    "from": "Sydney",
+    "to": "Melbourne",
+    "kms": 872
+  },
+  {
+    "from": "Melbourne",
+    "to": "Adelaide",
+    "kms": 1523
+  },
+  {
+    "from": "Brisbane",
+    "to": "Adelaide",
+    "kms": 2045
+  },
+  {
+    "from": "Adelaide",
+    "to": "Perth",
+    "kms": 2781
+  },
+  {
+    "from": "Perth",
+    "to": "Adelaide",
+    "kms": 2781
+  },
+  {
+    "from": "Adelaide",
+    "to": "Sydney",
+    "kms": 982
+  },
+  {
+    "from": "Sydney",
+    "to": "Melbourne",
+    "kms": 872
+  },
+  {
+    "from": "Paris",
+    "to": "Londres",
+    "kms": 344
+  },
+  {
+    "from": "New York",
+    "to": "Los Angeles",
+    "kms": 3940
+  },
+  {
+    "from": "Tokyo",
+    "to": "Osaka",
+    "kms": 515
+  },
+  {
+    "from": "Cairo",
+    "to": "Alexandria",
+    "kms": 225
+  },
+  {
+    "from": "Moscow",
+    "to": "Saint Petersburg",
+    "kms": 705
+  },
+  {
+    "from": "Rio de Janeiro",
+    "to": "Sao Paulo",
+    "kms": 429
+  },
+  {
+    "from": "Toronto",
+    "to": "Montreal",
+    "kms": 541
+  },
+  {
+    "from": "Beijing",
+    "to": "Shanghai",
+    "kms": 1180
+  },
+  {
+    "from": "Sydney",
+    "to": "Canberra",
+    "kms": 286
+  },
+  {
+    "from": "Mumbai",
+    "to": "New Delhi",
+    "kms": 1420
+  },
+  {
+    "from": "Cape Town",
+    "to": "Johannesburg",
+    "kms": 1400
+  },
+  {
+    "from": "Berlin",
+    "to": "Munich",
+    "kms": 585
+  },
+  {
+    "from": "San Francisco",
+    "to": "Seattle",
+    "kms": 1300
+  },
+  {
+    "from": "Dubai",
+    "to": "Abu Dhabi",
+    "kms": 140
+  },
+  {
+    "from": "Bangkok",
+    "to": "Chiang Mai",
+    "kms": 700
+  },
+  {
+    "from": "Buenos Aires",
+    "to": "Cordoba",
+    "kms": 710
+  },
+  {
+    "from": "Lisbon",
+    "to": "Porto",
+    "kms": 313
+  },
+  {
+    "from": "Mexico City",
+    "to": "Cancun",
+    "kms": 1600
+  },
+  {
+    "from": "Mumbai",
+    "to": "Goa",
+    "kms": 600
+  },
+  {
+    "from": "Vancouver",
+    "to": "Calgary",
+    "kms": 975
+  },
+  {
+    "from": "Nairobi",
+    "to": "Mombasa",
+    "kms": 490
+  },
+  {
+    "from": "Johannesburg",
+    "to": "Durban",
+    "kms": 600
+  }
+]
