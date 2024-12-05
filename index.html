@@ -10,30 +10,45 @@
     <div
           class="py-10 px-5"
           x-data="FilterableTable('./src/data/flights.json')"
+          @page-changed.window="updateCurrentPage($event)"
           data-perPage="10"
     >
+      <template x-if="loading">
+        <p>Loading...</p>
+      </template>
+      <template x-if="!loading && totalItems() > 0">
+        <div>
+        <table class="border-collapse table-fixed w-full text-sm">
+          <thead>
+          <tr>
+            <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Song</th>
+            <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Artist</th>
+            <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Year</th>
+          </tr>
+          </thead>
+          <tbody class="bg-white dark:bg-slate-800">
+            <template x-for="flight in items">
+              <tr>
+                <th x-text="flight.from" class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400"></th>
+                <td x-text="flight.to" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"></td>
+                <td x-text="flight.kms + (flight.kms > 1 ? ' kms' : ' km')" class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400"></td>
+              </tr>
+            </template>
+          </tbody>
 
-      <table class="border-collapse table-fixed w-full text-sm">
-        <thead>
-        <tr>
-          <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Song</th>
-          <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Artist</th>
-          <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Year</th>
-        </tr>
-        </thead>
-        <tbody class="bg-white dark:bg-slate-800">
-          <template x-for="flight in datas">
-            <tr>
-              <th x-text="flight.from" class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400"></th>
-              <td x-text="flight.to" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"></td>
-              <td x-text="flight.kms + (flight.kms > 1 ? ' kms' : ' km')" class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400"></td>
-            </tr>
+        </table>
+        <div x-data="Pagination(totalItems(), currentPage, perPage)">
+          <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">Préc.</button>
+          <template x-for="page in Array.from({ length: totalPages() }, (_, i) => i + 1)">
+            <button @click="goToPage(page)" x-text="page" :class="{ 'font-bold': currentPage === page }"></button>
           </template>
-        </tbody>
-
-      </table>
-
-    </div>
+          <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages()">Suiv.</button>
+        </div>
+      </div>
+    </template>
+    <template x-if="!loading && totalItems() === 0">
+      <p>No data available.</p>
+    </template>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
