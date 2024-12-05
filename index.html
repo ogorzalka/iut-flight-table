@@ -1,55 +1,116 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/svg+xml" href="/vite.svg"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Vite App</title>
-  </head>
-  <body>
-    <!-- @page-changed.window surveille l'évènement transmis par Pagination.js pour mettre à jour la page en cours -->
-    <div
-          class="py-10 px-5"
-          x-data="FilterableTable('./src/data/flights.json')"
-          @page-changed.window="updateCurrentPage($event)"
-          data-perPage="10"
-    >
-      <template x-if="loading">
+</head>
+<body>
+<!-- @page-changed.window surveille l'évènement transmis par Pagination.js pour mettre à jour la page en cours -->
+<div
+        class="py-10 px-5"
+        x-data="FilterableTable('./src/data/flights.json')"
+        @page-changed.window="updateCurrentPage($event)"
+        data-perPage="10"
+>
+    <template x-if="loading">
         <p>Loading...</p>
-      </template>
-      <template x-if="!loading && totalItems() > 0">
+    </template>
+    <template x-if="!loading && totalItems() > 0">
         <div>
-        <table class="border-collapse table-fixed w-full text-sm">
-          <thead>
-          <tr>
-            <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Song</th>
-            <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Artist</th>
-            <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Year</th>
-          </tr>
-          </thead>
-          <tbody class="bg-white dark:bg-slate-800">
-            <template x-for="flight in items">
-              <tr>
-                <th x-text="flight.from" class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400"></th>
-                <td x-text="flight.to" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"></td>
-                <td x-text="flight.kms + (flight.kms > 1 ? ' kms' : ' km')" class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400"></td>
-              </tr>
-            </template>
-          </tbody>
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 gap-4 py-6">
+                <div x-data="Filter('from', items)">
+                    <div>
+                        <label for="location" class="block text-sm/6 font-medium text-gray-900">Départ</label>
+                        <div class="mt-2 grid grid-cols-1">
+                            <select id="location" name="location" class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                                <template x-for="option in options()">
+                                    <option :value="option" x-text="option"></option>
+                                </template>
+                            </select>
+                            <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        </table>
-        <div x-data="Pagination(totalItems(), currentPage, perPage)">
-          <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">Préc.</button>
-          <template x-for="page in Array.from({ length: totalPages() }, (_, i) => i + 1)">
-            <button @click="goToPage(page)" x-text="page" :class="{ 'font-bold': currentPage === page }"></button>
-          </template>
-          <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages()">Suiv.</button>
+            <table class="border-collapse table-fixed w-full text-sm">
+                <thead>
+                <tr>
+                    <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                        Départ
+                    </th>
+                    <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                        Arrivée
+                    </th>
+                    <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                        Distance
+                    </th>
+                </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-slate-800">
+                <template x-for="flight in items">
+                    <tr>
+                        <th x-text="flight.from"
+                            class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400"></th>
+                        <td x-text="flight.to"
+                            class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400"></td>
+                        <td x-text="flight.kms + (flight.kms > 1 ? ' kms' : ' km')"
+                            class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400"></td>
+                    </tr>
+                </template>
+                </tbody>
+
+            </table>
+
+            <nav
+                x-data="Pagination(totalItems(), currentPage, perPage)"
+              class="flex items-center justify-between border-t border-gray-200 px-4 sm:px-0"
+            >
+                <div class="-mt-px flex w-0 flex-1">
+                    <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1" class="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
+                        <svg class="mr-3 size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd" d="M18 10a.75.75 0 0 1-.75.75H4.66l2.1 1.95a.75.75 0 1 1-1.02 1.1l-3.5-3.25a.75.75 0 0 1 0-1.1l3.5-3.25a.75.75 0 1 1 1.02 1.1l-2.1 1.95h12.59A.75.75 0 0 1 18 10Z" clip-rule="evenodd" />
+                        </svg>
+                        Préc.
+                    </button>
+                </div>
+                <div class="md:flex">
+                    <template x-for="page in Array.from({ length: totalPages() }, (_, i) => i + 1)">
+                        <button
+                            @click="goToPage(page)"
+                            x-text="page"
+                            class="inline-flex items-center border-t-2 px-4 pt-4 text-sm font-medium"
+                            :class="{ 'border-indigo-500 text-indigo-600': currentPage === page, 'border-transparent text-gray-500 hover:border-gray-300': currentPage !== page }"
+                        ></button>
+                    </template>
+                </div>
+                <div class="-mt-px flex w-0 flex-1 justify-end">
+                    <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages()" class="inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
+                        Suiv.
+                        <svg class="ml-3 size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd" d="M2 10a.75.75 0 0 1 .75-.75h12.59l-2.1-1.95a.75.75 0 1 1 1.02-1.1l3.5 3.25a.75.75 0 0 1 0 1.1l-3.5 3.25a.75.75 0 1 1-1.02-1.1l2.1-1.95H2.75A.75.75 0 0 1 2 10Z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+
+            <div x-data="Pagination(totalItems(), currentPage, perPage)">
+                <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">Préc.</button>
+                <template x-for="page in Array.from({ length: totalPages() }, (_, i) => i + 1)">
+                    <button @click="goToPage(page)" x-text="page"
+                            :class="{ 'font-bold': currentPage === page }"></button>
+                </template>
+                <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages()">Suiv.</button>
+            </div>
         </div>
-      </div>
     </template>
     <template x-if="!loading && totalItems() === 0">
-      <p>No data available.</p>
+        <p>No data available.</p>
     </template>
     <script type="module" src="/src/main.js"></script>
-  </body>
+</body>
 </html>
