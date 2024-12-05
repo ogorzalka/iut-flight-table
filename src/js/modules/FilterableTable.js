@@ -13,6 +13,17 @@ export default function FilterableTable(jsonFile) {
             this.fetchDatas(jsonFile);
         },
 
+        /*
+         * Re-initialise les valeurs de filtres.
+         */
+        resetFilters() {
+            this.filter = [];
+            this.updateItems();
+        },
+
+        /*
+         * Initialise les différents filtres
+         */
         filterInit(event) {
             this.filters.push(event.detail);
         },
@@ -49,6 +60,9 @@ export default function FilterableTable(jsonFile) {
             this.items = this.paginateData();
         },
 
+        /*
+         * Retourne le tableau d'éléments filtré selon les filtres
+         */
         filterData() {
             return this.datas.filter(data =>
                 this.filters.every(key => {
@@ -74,9 +88,19 @@ export default function FilterableTable(jsonFile) {
             return this.filteredDatas.length;
         },
 
+        /*
+         * Met à jour les filtres et les éléments affichés
+         */
         updateFilters(event) {
             this.filter[event.detail.key] = event.detail.value;
             this.currentPage = 1;
+            this.updateItems();
+        },
+
+        /*
+         * Met à jour la liste des éléments selon les filtres et page appliqués
+         */
+        updateItems() {
             this.filteredDatas = this.filterData();
             this.items = this.paginateData();
 

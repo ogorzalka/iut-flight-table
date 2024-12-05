@@ -7,6 +7,10 @@ export default function Pagination(totalItems, currentPage, perPage) {
             this.currentPage = currentPage;
         },
 
+        /*
+         * Rechargement de la pagination lors de la modification
+         * du nombre d'éléments du composant parent
+         */
         reload(event) {
           this.totalItems = event.detail.totalItems;
         },
