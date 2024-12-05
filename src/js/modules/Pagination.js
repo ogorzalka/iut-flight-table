@@ -6,6 +6,11 @@ export default function Pagination(totalItems, currentPage, perPage) {
         init() {
             this.currentPage = currentPage;
         },
+
+        reload(event) {
+          this.totalItems = event.detail.totalItems;
+        },
+
         /*
          * Récupère le nombre de pages total
          */
